@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Kontakte-Akte",
+  "version": "1.0.0",
+  "identifier": "de.kontakteakte.desktop",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://127.0.0.1:1420",
+    "beforeDevCommand": "npm run prepare-runtime && npm run dev",
+    "beforeBuildCommand": "npm run build && npm run prepare-runtime"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Kontakte-Akte",
+        "width": 1280,
+        "height": 820,
+        "minWidth": 960,
+        "minHeight": 620,
+        "resizable": true,
+        "center": true,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src ipc: http://ipc.localhost; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
+      "freezePrototype": true
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app"],
+    "category": "Productivity",
+    "shortDescription": "Dein persönliches Netzwerk.",
+    "longDescription": "Kontakte-Akte ist ein lokaler, verschlüsselter Personal Relationship Manager.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.png"
+    ],
+    "resources": ["resources/runtime/**/*"],
+    "macOS": {
+      "minimumSystemVersion": "12.0"
+    }
+  }
+}

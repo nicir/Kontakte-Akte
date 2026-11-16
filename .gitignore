@@ -1,0 +1,27 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+backend/dev-autogen.db
+
+# Node / frontend
+desktop/node_modules/
+desktop/dist/
+desktop/test-results/
+desktop/playwright-report/
+
+# Tauri / Rust
+desktop/src-tauri/target/
+desktop/src-tauri/gen/schemas/
+desktop/src-tauri/resources/runtime/
+
+# Build artefacts
+build/
+
+# Never commit user data
+*.db
+*.kabackup
+bridge.token
+.DS_Store

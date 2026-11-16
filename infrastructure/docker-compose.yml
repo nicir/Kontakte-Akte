@@ -1,0 +1,46 @@
+# Kontakte-Akte backend – started and stopped by the desktop app.
+#
+# Required environment (set by the app, none of it secret):
+#   KA_DATA_DIR  host path, e.g. "$HOME/Library/Application Support/Kontakte-Akte"
+#   KA_VERSION   image tag (app version)
+#   KA_UID/KA_GID  host user id / group id (file ownership on the bind mount)
+# The master password is NEVER passed here; it is sent only in the unlock request.
+name: kontakte-akte
+
+services:
+  backend:
+    image: kontakte-akte-backend:${KA_VERSION:-1.0.0}
+    build:
+      context: ./backend
+    pull_policy: never            # never pull or rebuild implicitly at launch
+    container_name: kontakte-akte-backend
+    restart: unless-stopped
+    user: "${KA_UID:-65534}:${KA_GID:-65534}"
+    ports:
+      - "127.0.0.1:${KA_PORT:-47811}:8000"   # loopback only – never exposed to the LAN
+    environment:
+      KA_DATA_ROOT: /data
+    volumes:
+      # Persistent data lives on the Mac, never only inside the container.
+      - type: bind
+        source: ${KA_DATA_DIR:?KA_DATA_DIR must be set}/data
+        target: /data/data
+      - type: bind
+        source: ${KA_DATA_DIR:?KA_DATA_DIR must be set}/backups
+        target: /data/backups
+      - type: bind
+        source: ${KA_DATA_DIR:?KA_DATA_DIR must be set}/config
+        target: /data/config
+        read_only: true           # bridge token: readable, never writable by the container
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "1m"
+        max-file: "3"
