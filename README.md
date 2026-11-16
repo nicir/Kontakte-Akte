@@ -47,6 +47,29 @@ Kalender-/E-Mail-Synchronisation, Mehrbenutzerbetrieb, Cloud-Sync und KI-Funktio
 
 ## Schnellstart
 
+### Variante A: Fertige App (ohne selbst zu bauen)
+
+Im Repository liegt eine fertig gebaute App für Apple-Silicon-Macs:
+[`release/Kontakte-Akte-1.0.0-macos-arm64.zip`](release/Kontakte-Akte-1.0.0-macos-arm64.zip)
+
+1. Docker Desktop installieren und einmal starten (Lizenz bestätigen).
+2. Zip entpacken und `Kontakte-Akte.app` in den Ordner **Programme** ziehen.
+3. Die App ist nicht mit einer Apple-Developer-ID signiert. Wurde das Zip im Browser
+   heruntergeladen, meldet macOS beim ersten Öffnen, die App könne nicht geöffnet werden.
+   Dann einmalig im Terminal ausführen:
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/Kontakte-Akte.app
+   ```
+   (oder: Systemeinstellungen → Datenschutz & Sicherheit → „Dennoch öffnen“).
+   Bei `git clone` ist das nicht nötig.
+4. **Kontakte-Akte** aus dem Programme-Ordner starten. Beim ersten Start wird das Backend
+   einmalig eingerichtet (Internet nötig, einige Minuten).
+5. Ein **Master-Passwort** festlegen.
+
+Wichtig: Immer nur **eine** Kopie der App starten (die im Programme-Ordner).
+
+### Variante B: Selbst bauen
+
 1. Docker Desktop installieren und einmal starten (Lizenz bestätigen).
 2. App bauen und installieren (einmalig, siehe [Installation](docs/INSTALLATION.md)):
    ```bash
